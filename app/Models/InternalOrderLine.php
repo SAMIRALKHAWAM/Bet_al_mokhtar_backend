@@ -7,29 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ItemImage extends Model
+class InternalOrderLine extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'internal_order_id',
         'item_id',
-        'image',
+        'quantity',
+        'price',
     ];
 
     protected $hidden = [
-        'item_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function getImageAttribute()
+    public function InternalOrder(): BelongsTo
     {
-        return \env('BASE_URL').'/storage/'.$this->attributes['image'];
+        return $this->belongsTo(InternalOrder::class, 'internal_order_id');
     }
-
 
     public function Item(): BelongsTo
     {

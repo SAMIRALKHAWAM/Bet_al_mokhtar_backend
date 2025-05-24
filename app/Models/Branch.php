@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Branch extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'id';
 
@@ -23,5 +24,19 @@ class Branch extends Model
         'deleted_at',
     ];
 
+    /** @noinspection PhpUnused */
+    public function Employees(): HasMany
+    {
+        return $this->hasMany(Employee::class, 'branch_id');
+    }
 
+    public function Tables(): HasMany
+    {
+        return $this->hasMany(Table::class, 'branch_id');
+    }
+
+    public function InternalOrders(): HasMany
+    {
+        return $this->hasMany(InternalOrder::class, 'branch_id');
+    }
 }

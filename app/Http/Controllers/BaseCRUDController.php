@@ -16,12 +16,22 @@ class BaseCRUDController extends Controller
     protected $createRequest;
     protected $updateRequest;
     protected $idRequest;
-    protected $showDataRequest;
+
 
     protected function index()
     {
         $res = $this->service->getAll();
         return $this->sendResponse(__('custom.Success'), $res);
+    }
+
+    protected function indexPagination()
+    {
+        $res = $this->service->getAllPagination();
+        $perPage = \request()->header('perPage',10);
+        if ($perPage === '*'){
+            return $this->sendResponse(__('custom.Success'), $res);
+        }
+        return $this->sendPagination(__('custom.Success'), $res);
     }
 
     protected function get_one($id)

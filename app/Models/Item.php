@@ -35,7 +35,6 @@ class Item extends Model
     ];
 
 
-
     public function Category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -44,5 +43,10 @@ class Item extends Model
     public function ItemImages(): HasMany
     {
         return $this->hasMany(ItemImage::class, 'item_id');
+    }
+
+    public function InternalOrderLines(): HasMany
+    {
+        return $this->hasMany(InternalOrderLine::class, 'item_id');
     }
 }

@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
-use App\Exceptions\BaseException;
-use App\Exceptions\CustomExceptionWithMessage;
-use App\Exceptions\NotFoundException;
+
 use App\Exceptions\ValidationException;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\FlareClient\Http\Exceptions\NotFound;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 class BaseService
 {
@@ -18,6 +17,15 @@ class BaseService
     public function getAll($where = [])
     {
         return $this->model::where($where)->get();
+    }
+
+    /** @noinspection PhpUnused */
+    public function getAllPagination($where = []){
+        $perPage = \request()->header('perPage',10);
+        if ($perPage === '*'){
+            return $this->getAll($where);
+        }
+        return $this->model::where($where)->paginate($perPage)->toArray();
     }
 
     public function getOne($id)
