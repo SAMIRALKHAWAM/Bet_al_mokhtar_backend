@@ -3,10 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\InternalOrder;
 use App\Models\Item;
+use App\Models\Offer;
 use App\Models\User;
 use App\Observers\Category\CategoryObserver;
+use App\Observers\InternalOrder\InternalOrderObserver;
 use App\Observers\Item\ItemObserver;
+use App\Observers\Offer\OfferObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +32,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Item::observe(ItemObserver::class);
         Category::observe(CategoryObserver::class);
+        Offer::observe(OfferObserver::class);
+        InternalOrder::observe(InternalOrderObserver::class);
     }
 }

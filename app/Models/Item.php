@@ -47,6 +47,12 @@ class Item extends Model
 
     public function InternalOrderLines(): HasMany
     {
-        return $this->hasMany(InternalOrderLine::class, 'item_id');
+        return $this->hasMany(InternalOrderItem::class, 'item_id');
+    }
+
+    /** @noinspection PhpUnused */
+    public function OfferItems(): HasMany
+    {
+        return $this->hasMany(OfferItem::class, 'item_id');
     }
 }

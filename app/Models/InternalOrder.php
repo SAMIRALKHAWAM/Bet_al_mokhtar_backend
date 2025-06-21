@@ -47,6 +47,6 @@ class InternalOrder extends Model
 
     public function InternalOrderLines(): HasMany
     {
-        return $this->hasMany(InternalOrderLine::class, 'internal_order_id');
+        return $this->hasMany(InternalOrderItem::class, 'internal_order_id');
     }
 }

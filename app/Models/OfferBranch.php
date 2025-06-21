@@ -7,17 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class InternalOrderLine extends Model
+class OfferBranch extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'internal_order_id',
-        'item_id',
-        'quantity',
-        'price',
+        'offer_id',
+        'branch_id',
     ];
 
     protected $hidden = [
@@ -26,13 +24,13 @@ class InternalOrderLine extends Model
         'deleted_at',
     ];
 
-    public function InternalOrder(): BelongsTo
+    public function Offer(): BelongsTo
     {
-        return $this->belongsTo(InternalOrder::class, 'internal_order_id');
+        return $this->belongsTo(Offer::class, 'offer_id');
     }
 
-    public function Item(): BelongsTo
+    public function Branch(): BelongsTo
     {
-        return $this->belongsTo(Item::class, 'item_id');
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 }

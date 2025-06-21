@@ -4,7 +4,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Branch\BranchController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Employee\EmployeeController;
+use App\Http\Controllers\InternalOrder\InternalOrderController;
 use App\Http\Controllers\Item\ItemController;
+use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\Rate\RateController;
 use App\Http\Controllers\Table\TableController;
 use Illuminate\Http\Request;
@@ -60,6 +62,18 @@ Route::controller(TableController::class)->group(function () {
     Route::get('/get_one_table/{id}', 'get_one');
     Route::get('/get_tables', 'indexPagination');
     Route::post('/update_one_table/{id}', 'update');
+
+});
+
+Route::controller(OfferController::class)->group(function (){
+    Route::post('/create_offer', 'store');
+    Route::delete('/delete_one_offer/{id}', 'destroy');
+    Route::get('/get_one_offer/{id}', 'get_one');
+    Route::get('/get_offers', 'indexPagination');
+});
+
+Route::controller(InternalOrderController::class)->group(function () {
+    Route::post('/create_internal_order', 'store');
 
 });
 

@@ -39,4 +39,10 @@ class Branch extends Model
     {
         return $this->hasMany(InternalOrder::class, 'branch_id');
     }
+
+
+    public function OfferBranches(): HasMany
+    {
+        return $this->hasMany(OfferBranch::class, 'branch_id');
+    }
 }
