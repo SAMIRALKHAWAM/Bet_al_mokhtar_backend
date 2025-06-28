@@ -38,13 +38,13 @@ class Offer extends Model
     /** @noinspection PhpUnused */
     public function OfferItems(): HasMany
     {
-        return $this->hasMany(OfferItem::class, 'offer_id');
+        return $this->hasMany(OfferItem::class, 'offer_id')->withTrashed();
     }
 
 
     public function OfferBranches(): HasMany
     {
-        return $this->hasMany(OfferBranch::class, 'offer_id');
+        return $this->hasMany(OfferBranch::class, 'offer_id')->withTrashed();
     }
 
     /** @noinspection PhpUnused */

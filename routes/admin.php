@@ -3,12 +3,15 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Branch\BranchController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Discount\DiscountController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\InternalOrder\InternalOrderController;
+use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Item\ItemController;
 use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\Rate\RateController;
 use App\Http\Controllers\Table\TableController;
+use App\Http\Controllers\Tax\TaxController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +65,7 @@ Route::controller(TableController::class)->group(function () {
     Route::get('/get_one_table/{id}', 'get_one');
     Route::get('/get_tables', 'indexPagination');
     Route::post('/update_one_table/{id}', 'update');
+    Route::post('/table_change_status/{id}','TableChangeStatus');
 
 });
 
@@ -74,6 +78,36 @@ Route::controller(OfferController::class)->group(function (){
 
 Route::controller(InternalOrderController::class)->group(function () {
     Route::post('/create_internal_order', 'store');
+    Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
+    Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems');
 
 });
+
+
+Route::controller(InvoiceController::class)->group(function () {
+    Route::post('/change_invoice_status/{id}', 'ChangeInvoiceStatus');
+    Route::get('/get_one_invoice/{id}', 'get_one')->name('get_one_invoice');
+    Route::get('/print_invoice/{id}', 'PrintInvoice');
+
+});
+
+Route::controller(TaxController::class)->group(function () {
+
+    Route::post('/create_tax', 'store');
+    Route::delete('/delete_one_tax/{id}', 'destroy');
+    Route::post('/update_one_tax/{id}', 'update');
+    Route::get('/get_one_tax/{id}', 'get_one');
+    Route::get('/get_taxes', 'index');
+});
+
+
+Route::controller(DiscountController::class)->group(function () {
+    Route::post('/create_discount', 'store');
+    Route::delete('/delete_one_discount/{id}', 'destroy');
+    Route::post('/update_one_discount/{id}', 'update');
+    Route::get('/get_one_discount/{id}', 'get_one');
+    Route::get('/get_discounts', 'index');
+});
+
+
 

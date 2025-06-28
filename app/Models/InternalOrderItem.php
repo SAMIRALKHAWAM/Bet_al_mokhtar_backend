@@ -28,6 +28,24 @@ class InternalOrderItem extends Model
         'deleted_at',
     ];
 
+    protected $appends = ['item_name','item_price'];
+
+    /** @noinspection PhpUnused */
+    public function getItemNameAttribute()
+    {
+        $name = $this->Item->name;
+        unset($this->Item);
+        return $name;
+    }
+
+    /** @noinspection PhpUnused */
+    public function getItemPriceAttribute()
+    {
+        $price = $this->Item->price;
+        unset($this->Item);
+        return $price;
+    }
+
     public function InternalOrder(): BelongsTo
     {
         return $this->belongsTo(InternalOrder::class, 'internal_order_id');
@@ -35,6 +53,6 @@ class InternalOrderItem extends Model
 
     public function Item(): BelongsTo
     {
-        return $this->belongsTo(Item::class, 'item_id');
+        return $this->belongsTo(Item::class, 'item_id')->withTrashed();
     }
 }

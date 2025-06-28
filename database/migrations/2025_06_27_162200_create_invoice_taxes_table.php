@@ -1,27 +1,25 @@
 <?php
 
-use App\Enum\OrderStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-
-        Schema::create('internal_orders', function (Blueprint $table) {
+        Schema::create('invoice_taxes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('invoice_id');
             $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();
-            $table->unsignedBigInteger('waiter_id');
-            $table->foreign('waiter_id')->references('id')->on('employees')->cascadeOnDelete();
-            $table->integer('full_price')->nullable();
-            $table->string('status')->default(OrderStatusEnum::PENDING);
+            $table->unsignedBigInteger('tax_id');
+            $table->foreign('tax_id')->references('id')->on('taxes')->cascadeOnDelete();
+            $table->integer('percent');
+            $table->integer('amount');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('internal_orders');
+        Schema::dropIfExists('invoice_taxes');
     }
 };

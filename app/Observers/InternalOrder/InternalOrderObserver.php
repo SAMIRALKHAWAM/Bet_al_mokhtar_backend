@@ -18,9 +18,9 @@ class InternalOrderObserver
      */
     public function created(InternalOrder $internalOrder): void
     {
-       $full_price = 0.00;
-       $items = \request()->items;
-       $offers = \request()->offers;
+        $full_price = 0.00;
+        $items = \request()->items;
+        $offers = \request()->offers;
         if (!empty($items)) {
             $full_price += $this->AddInternalOrderItems($internalOrder->id, $items);
         }
@@ -29,28 +29,30 @@ class InternalOrderObserver
             $full_price += $this->AddInternalOrderoffers($internalOrder->id, $offers);
         }
         $internalOrder->update(['full_price' => $full_price]);
-     }
+        $invoice = $internalOrder->Invoice;
+        $invoice->increment('full_price', $full_price);
+    }
 
-    private function AddInternalOrderItems( $id,  $items)
+    private function AddInternalOrderItems($id, $items)
     {
         $price = 0.00;
-        foreach ($items as $item){
-        $neededItem = Item::find($item['item_id']);
-        $internalOrderItem = InternalOrderItem::create([
-            'internal_order_id' => $id,
-            'item_id' => $item['item_id'],
-            'quantity' => $item['quantity'],
-            'price' => $item['quantity'] * $neededItem->price
-        ]);
-        $price += $internalOrderItem->price;
+        foreach ($items as $item) {
+            $neededItem = Item::find($item['item_id']);
+            $internalOrderItem = InternalOrderItem::create([
+                'internal_order_id' => $id,
+                'item_id' => $item['item_id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['quantity'] * $neededItem->price
+            ]);
+            $price += $internalOrderItem->price;
         }
         return $price;
     }
 
-    private function AddInternalOrderoffers( $id,  $offers)
+    private function AddInternalOrderoffers($id, $offers)
     {
         $price = 0.00;
-        foreach ($offers as $offer){
+        foreach ($offers as $offer) {
             $neededOffer = Offer::find($offer['offer_id']);
             $internalOrderOffer = InternalOrderOffer::create([
                 'internal_order_id' => $id,

@@ -3,7 +3,10 @@
 namespace App\Services\Offer;
 
 use App\Http\Requests\Offer\GetAllOffersRequest;
+use App\Models\Discount;
 use App\Models\Offer;
+use App\Models\OfferBranch;
+use App\Models\OfferItem;
 use App\Services\BaseService;
 use Illuminate\Support\Carbon;
 
@@ -18,6 +21,14 @@ class OfferService extends BaseService
     public function getAllPagination($where = [])
     {
         $data = \app(GetAllOffersRequest::class);
+
+        $offerIds = Offer::where('to_date', '<', now())->pluck('id');
+        if (!$offerIds->isEmpty()) {
+            OfferItem::whereIn('offer_id', $offerIds)->delete();
+            OfferBranch::whereIn('offer_id', $offerIds)->delete();
+            Offer::whereIn('id', $offerIds)->delete();
+        }
+
 
         if (!empty($data['search'])) {
             $where[] = ['name', 'like', '%' . $data['search'] . '%'];

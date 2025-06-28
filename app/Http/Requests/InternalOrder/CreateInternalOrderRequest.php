@@ -20,7 +20,7 @@ class CreateInternalOrderRequest extends BaseRequest
 
         return [
             'branch_id' => [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'],
-            'table_id' => [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id), 'required'],
+            'table_id' => [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->whereNull('deleted_at')->where('available',0), 'required'],
             'waiter_id' => [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', 'waiter'), 'required'],
             'items' => 'array',
             'items.*.item_id' => [

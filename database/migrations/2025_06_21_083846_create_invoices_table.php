@@ -10,17 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('tables', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('table_id');
+            $table->foreign('table_id')->references('id')->on('tables')->cascadeOnDelete();
             $table->unsignedBigInteger('branch_id');
             $table->foreign('branch_id')->references('id')->on('branches')->cascadeOnDelete();
-            $table->unsignedBigInteger('invoice_id')->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();
-            $table->integer('table_number');
-            $table->integer('chair_number');
-            $table->boolean('available')->default(true);
+            $table->integer('full_price')->default(0);
+            $table->integer('tax')->default(0);
+            $table->integer('final_price')->default(0);
+            $table->integer('discount')->default(0);
+            $table->string('status')->default('pending');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tables');
+        Schema::dropIfExists('invoices');
     }
 };

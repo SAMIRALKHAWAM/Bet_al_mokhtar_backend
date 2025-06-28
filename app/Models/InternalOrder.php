@@ -15,10 +15,8 @@ class InternalOrder extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'table_id',
-        'branch_id',
+        'invoice_id',
         'waiter_id',
-        'discount',
         'full_price',
         'status',
     ];
@@ -29,14 +27,14 @@ class InternalOrder extends Model
         'deleted_at',
     ];
 
-    public function Table(): BelongsTo
-    {
-        return $this->belongsTo(Table::class, 'table_id');
-    }
+    protected $appends = ['waiter_name'];
 
-    public function Branch(): BelongsTo
+    /** @noinspection PhpUnused */
+    public function getWaiterNameAttribute()
     {
-        return $this->belongsTo(Branch::class, 'branch_id');
+        $name = $this->Waiter->name;
+        unset($this->Waiter);
+        return $name;
     }
 
     /** @noinspection PhpUnused */
@@ -48,5 +46,16 @@ class InternalOrder extends Model
     public function InternalOrderLines(): HasMany
     {
         return $this->hasMany(InternalOrderItem::class, 'internal_order_id');
+    }
+
+    /** @noinspection PhpUnused */
+    public function InternalOrderOffers(): HasMany
+    {
+        return $this->hasMany(InternalOrderOffer::class, 'internal_order_id');
+    }
+
+    public function Invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class, 'invoice_id');
     }
 }

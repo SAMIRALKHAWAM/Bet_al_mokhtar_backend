@@ -4,20 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OfferItem extends Model
+class Tax extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'offer_id',
-        'item_id',
-        'quantity',
-        'price',
+        'name',
+        'percent',
     ];
 
     protected $hidden = [
@@ -27,16 +25,12 @@ class OfferItem extends Model
     ];
 
     protected $casts = [
-        'price' => 'float',
+        'percent' => 'integer',
     ];
 
-    public function Item(): BelongsTo
+    public function InvoiceTaxes(): HasMany
     {
-        return $this->belongsTo(Item::class, 'item_id')->withTrashed();
+        return $this->hasMany(InvoiceTax::class, 'tax_id');
     }
 
-    public function Offer(): BelongsTo
-    {
-        return $this->belongsTo(Offer::class, 'offer_id');
-    }
 }

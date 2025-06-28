@@ -35,9 +35,9 @@ class Branch extends Model
         return $this->hasMany(Table::class, 'branch_id');
     }
 
-    public function InternalOrders(): HasMany
+    public function Invoices(): HasMany
     {
-        return $this->hasMany(InternalOrder::class, 'branch_id');
+        return $this->hasMany(Invoice::class, 'branch_id');
     }
 
 

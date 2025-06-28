@@ -22,6 +22,7 @@ class Table extends Model
 
     protected $fillable = [
         'branch_id',
+        'invoice_id',
         'table_number',
         'chair_number',
         'available',
@@ -54,8 +55,8 @@ class Table extends Model
         return $this->belongsTo(Branch::class, 'branch_id');
     }
 
-    public function InternalOrders(): HasMany
+    public function Invoices(): HasMany
     {
-        return $this->hasMany(InternalOrder::class, 'table_id');
+        return $this->hasMany(Invoice::class, 'table_id');
     }
 }
