@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Branch extends Model
@@ -44,5 +45,10 @@ class Branch extends Model
     public function OfferBranches(): HasMany
     {
         return $this->hasMany(OfferBranch::class, 'branch_id');
+    }
+
+    public function Warehouse(): HasOne
+    {
+        return $this->hasOne(Warehouse::class, 'branch_id');
     }
 }

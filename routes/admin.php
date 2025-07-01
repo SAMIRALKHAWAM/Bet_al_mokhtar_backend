@@ -8,10 +8,13 @@ use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\InternalOrder\InternalOrderController;
 use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Item\ItemController;
+use App\Http\Controllers\Material\MaterialController;
 use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\Rate\RateController;
 use App\Http\Controllers\Table\TableController;
 use App\Http\Controllers\Tax\TaxController;
+use App\Http\Controllers\Warehouse\WarehouseController;
+use App\Http\Controllers\WarehouseMaterial\WarehouseMaterialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -109,5 +112,23 @@ Route::controller(DiscountController::class)->group(function () {
     Route::get('/get_discounts', 'index');
 });
 
+
+Route::controller(MaterialController::class)->group(function () {
+    Route::post('/create_material', 'store');
+    Route::delete('/delete_one_material/{id}', 'destroy');
+    Route::post('/update_one_material/{id}', 'update');
+    Route::get('/get_one_material/{id}', 'get_one');
+    Route::get('/get_materials', 'index');
+});
+
+Route::controller(WarehouseMaterialController::class)->group(function () {
+    Route::get('/get_warehouse_materials', 'index');
+});
+
+Route::controller(WarehouseController::class)->group(function () {
+
+    Route::get('/get_one_warehouse/{id}', 'get_one');
+    Route::get('/get_warehouses', 'index');
+});
 
 
