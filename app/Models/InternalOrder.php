@@ -14,6 +14,8 @@ class InternalOrder extends Model
 
     protected $primaryKey = 'id';
 
+
+
     protected $fillable = [
         'invoice_id',
         'waiter_id',
@@ -27,7 +29,7 @@ class InternalOrder extends Model
         'deleted_at',
     ];
 
-    protected $appends = ['waiter_name'];
+    protected $appends = ['waiter_name','table_id'];
 
     /** @noinspection PhpUnused */
     public function getWaiterNameAttribute()
@@ -35,6 +37,14 @@ class InternalOrder extends Model
         $name = $this->Waiter->name;
         unset($this->Waiter);
         return $name;
+    }
+
+    /** @noinspection PhpUnused */
+    public function getTableIdAttribute()
+    {
+        $tableId = $this->Invoice->table_id;
+        unset($this->Invoice);
+        return $tableId;
     }
 
     /** @noinspection PhpUnused */
