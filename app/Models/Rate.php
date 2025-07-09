@@ -18,6 +18,7 @@ class Rate extends Model
 
     protected $fillable = [
         'user_id',
+        'branch_id',
         'rate',
         'description',
     ];
@@ -33,6 +34,11 @@ class Rate extends Model
     public function User(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function Branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 
 }

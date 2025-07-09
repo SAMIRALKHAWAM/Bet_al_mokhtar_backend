@@ -47,6 +47,11 @@ class Branch extends Model
         return $this->hasMany(OfferBranch::class, 'branch_id');
     }
 
+    public function Rates(): HasMany
+    {
+        return $this->hasMany(Rate::class, 'branch_id');
+    }
+
     public function Warehouse(): HasOne
     {
         return $this->hasOne(Warehouse::class, 'branch_id');

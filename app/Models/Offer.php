@@ -52,4 +52,7 @@ class Offer extends Model
     {
         return $this->hasMany(InternalOrderOffer::class, 'offer_id');
     }
+
+
+
 }

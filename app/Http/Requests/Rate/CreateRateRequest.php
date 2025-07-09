@@ -4,6 +4,7 @@ namespace App\Http\Requests\Rate;
 
 use App\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateRateRequest extends BaseRequest
 {
@@ -17,6 +18,7 @@ class CreateRateRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'branch_id' => [Rule::exists('branches','id')->whereNull('deleted_at'),'required'],
             'rate' => 'required|integer|min:1|max:5',
             'description' => 'nullable',
         ];

@@ -13,6 +13,8 @@ class InternalOrderOffer extends Model
 
     protected $primaryKey = 'id';
 
+    protected $with = ['Offer'];
+
     protected $fillable = [
         'internal_order_id',
         'offer_id',
@@ -26,32 +28,6 @@ class InternalOrderOffer extends Model
         'deleted_at',
     ];
 
-    protected $appends = ['offer_name', 'offer_description', 'offer_price'];
-
-
-    /** @noinspection PhpUnused */
-    public function getOfferNameAttribute()
-    {
-        $name = $this->Offer->name;
-        unset($this->Offer);
-        return $name;
-    }
-
-    /** @noinspection PhpUnused */
-    public function getOfferDescriptionAttribute()
-    {
-        $description = $this->Offer->description;
-        unset($this->Offer);
-        return $description;
-    }
-
-    /** @noinspection PhpUnused */
-    public function getOfferPriceAttribute()
-    {
-        $price = $this->Offer->price;
-        unset($this->Offer);
-        return $price;
-    }
 
     public function InternalOrder(): BelongsTo
     {
@@ -62,5 +38,6 @@ class InternalOrderOffer extends Model
     {
         return $this->belongsTo(Offer::class, 'offer_id')->withTrashed();
     }
+
 
 }

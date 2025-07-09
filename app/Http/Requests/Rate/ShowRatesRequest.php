@@ -20,6 +20,7 @@ class ShowRatesRequest extends BaseRequest
         return [
             'rate' => 'nullable|numeric|min:1|max:5',
             'userId' => [Rule::exists('users','id'),'nullable'],
+            'branchId' => [Rule::exists('branches','id')->whereNull('deleted_at'),'nullable'],
         ];
     }
 

@@ -82,7 +82,8 @@ Route::controller(OfferController::class)->group(function (){
 Route::controller(InternalOrderController::class)->group(function () {
     Route::post('/create_internal_order', 'store');
     Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
-    Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems');
+    Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems')->name('GetInternalOrderItems');
+    Route::get('/get_internal_orders','indexPagination');
 
 });
 
