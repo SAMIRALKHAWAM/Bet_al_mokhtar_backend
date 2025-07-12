@@ -11,10 +11,12 @@ class OrderStatusEnum
     const FINISHING = 'finishing';
     const DELIVERING = 'delivering';
     const CHECKOUT = 'checkout';
+    const PRINT = 'print';
     const DONE = 'done';
 
 
-    public static function InternalOrderStatus(){
+    public static function InternalOrderStatus()
+    {
         return [
             self::PENDING,
             self::WAITING,
@@ -23,9 +25,11 @@ class OrderStatusEnum
         ];
     }
 
-    public static function InvoiceStatus(){
+    public static function InvoiceStatus()
+    {
         return [
             self::CHECKOUT,
+            self::PRINT,
             self::DONE,
         ];
     }

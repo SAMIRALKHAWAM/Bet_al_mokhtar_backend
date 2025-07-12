@@ -31,7 +31,7 @@ class InvoiceService extends BaseService
                 'invoice_id' => null,
                 'available' => 1
             ]);
-
+        }elseif ($data['status'] == OrderStatusEnum::PRINT){
             if (!empty($data['discount_id'])){
                 $discount = Discount::find($data['discount_id']);
                 $amount = ($discount->percent * $invoice->full_price) / 100 ;
