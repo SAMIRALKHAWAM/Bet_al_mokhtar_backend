@@ -5,6 +5,7 @@ use App\Http\Controllers\Branch\BranchController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Discount\DiscountController;
 use App\Http\Controllers\Employee\EmployeeController;
+use App\Http\Controllers\ExternalOrder\ExternalOrderController;
 use App\Http\Controllers\InternalOrder\InternalOrderController;
 use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Item\ItemController;
@@ -85,6 +86,15 @@ Route::controller(InternalOrderController::class)->group(function () {
     Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
     Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems')->name('GetInternalOrderItems');
     Route::get('/get_internal_orders','indexPagination');
+
+});
+
+Route::controller(ExternalOrderController::class)->group(function () {
+    Route::post('/create_external_order', 'store');
+//    Route::post('/update_internal_order/{id}', 'update');
+//    Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
+//    Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems')->name('GetInternalOrderItems');
+//    Route::get('/get_internal_orders','indexPagination');
 
 });
 

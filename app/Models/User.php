@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Rate::class, 'user_id');
     }
+
+    public function ExternalOrderInformation(): HasMany
+    {
+        return $this->hasMany(ExternalOrderInformation::class, 'user_id');
+    }
 }

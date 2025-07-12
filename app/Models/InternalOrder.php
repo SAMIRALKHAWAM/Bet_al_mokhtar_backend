@@ -29,12 +29,12 @@ class InternalOrder extends Model
         'deleted_at',
     ];
 
-    protected $appends = ['waiter_name','table_id'];
+    protected $appends = ['waiter_name','table_id','type'];
 
     /** @noinspection PhpUnused */
     public function getWaiterNameAttribute()
     {
-        $name = $this->Waiter->name;
+        $name = $this->Waiter?->name;
         unset($this->Waiter);
         return $name;
     }
@@ -42,9 +42,16 @@ class InternalOrder extends Model
     /** @noinspection PhpUnused */
     public function getTableIdAttribute()
     {
-        $tableId = $this->Invoice->table_id;
+        $tableId = $this->Invoice?->table_id;
         unset($this->Invoice);
         return $tableId;
+    }
+
+    /** @noinspection PhpUnused */
+    public function getTypeAttribute()
+    {
+        $type = $this->waiter_id == null ? 'ext' : 'int';
+        return $type;
     }
 
     /** @noinspection PhpUnused */
