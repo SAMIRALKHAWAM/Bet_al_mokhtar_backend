@@ -26,6 +26,7 @@ class InternalOrderService extends BaseService
             [
                 'table_id' => $data['table_id'],
                 'branch_id' => $data['branch_id'],
+                'status' => OrderStatusEnum::PENDING,
             ],
             [
                 'table_id' => $data['table_id'],

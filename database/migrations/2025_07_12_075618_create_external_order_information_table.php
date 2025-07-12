@@ -1,27 +1,26 @@
 <?php
 
-use App\Enum\OrderStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-
-        Schema::create('internal_orders', function (Blueprint $table) {
+        Schema::create('external_order_information', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('invoice_id');
             $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();
-            $table->unsignedBigInteger('waiter_id')->nullable();
-            $table->foreign('waiter_id')->references('id')->on('employees')->cascadeOnDelete();
-            $table->integer('full_price')->nullable();
-            $table->string('status')->default(OrderStatusEnum::WAITING);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->string('location');
+            $table->string('phone');
+            $table->string('qr')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('internal_orders');
+        Schema::dropIfExists('external_order_information');
     }
 };
