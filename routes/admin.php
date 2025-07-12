@@ -81,6 +81,7 @@ Route::controller(OfferController::class)->group(function (){
 
 Route::controller(InternalOrderController::class)->group(function () {
     Route::post('/create_internal_order', 'store');
+    Route::post('/update_internal_order/{id}', 'update');
     Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
     Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems')->name('GetInternalOrderItems');
     Route::get('/get_internal_orders','indexPagination');
@@ -91,7 +92,8 @@ Route::controller(InternalOrderController::class)->group(function () {
 Route::controller(InvoiceController::class)->group(function () {
     Route::post('/change_invoice_status/{id}', 'ChangeInvoiceStatus');
     Route::get('/get_one_invoice/{id}', 'get_one')->name('get_one_invoice');
-    Route::get('/print_invoice/{id}', 'PrintInvoice');
+    Route::get('/print_invoice/{id}', 'PrintInvoice')->name('print_invoice');
+    Route::get('/get_invoices','indexPagination');
 
 });
 

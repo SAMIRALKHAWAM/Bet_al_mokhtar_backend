@@ -49,6 +49,7 @@ class Invoice extends Model
 
     public function toArray()
     {
+        if (\request()->route()->getName() == 'get_one_invoice')
         $this->load([
             'InternalOrders',
             'InternalOrders.InternalOrderLines',

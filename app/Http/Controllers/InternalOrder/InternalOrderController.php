@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\InternalOrder\ChangeInternalOrderStatusRequest;
 use App\Http\Requests\InternalOrder\CreateInternalOrderRequest;
 use App\Http\Requests\InternalOrder\InternalOrderIdRequest;
+use App\Http\Requests\InternalOrder\UpdateInternalOrderRequest;
 use App\Models\InternalOrder;
 use App\Services\InternalOrder\InternalOrderService;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class InternalOrderController extends BaseCRUDController
         $this->service = $service;
         $this->createRequest = CreateInternalOrderRequest::class;
         $this->idRequest = InternalOrderIdRequest::class;
+        $this->updateRequest = UpdateInternalOrderRequest::class;
     }
 
 
