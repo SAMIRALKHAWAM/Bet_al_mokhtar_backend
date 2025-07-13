@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Branch\BranchController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Discount\DiscountController;
@@ -42,8 +43,8 @@ Route::controller(ItemController::class)->group(function () {
     Route::get('/get_one_item/{id}', 'get_one');
     Route::delete('/delete_one_item/{id}', 'destroy');
     Route::post('/update_one_item/{id}', 'update');
-    Route::post('/add_item_images/{id}','AddItemImages');
-    Route::post('/delete_item_images/{id}','DeleteItemImages');
+    Route::post('/add_item_images/{id}', 'AddItemImages');
+    Route::post('/delete_item_images/{id}', 'DeleteItemImages');
 });
 
 Route::controller(RateController::class)->group(function () {
@@ -69,11 +70,11 @@ Route::controller(TableController::class)->group(function () {
     Route::get('/get_one_table/{id}', 'get_one');
     Route::get('/get_tables', 'indexPagination');
     Route::post('/update_one_table/{id}', 'update');
-    Route::post('/table_change_status/{id}','TableChangeStatus');
+    Route::post('/table_change_status/{id}', 'TableChangeStatus');
 
 });
 
-Route::controller(OfferController::class)->group(function (){
+Route::controller(OfferController::class)->group(function () {
     Route::post('/create_offer', 'store');
     Route::delete('/delete_one_offer/{id}', 'destroy');
     Route::get('/get_one_offer/{id}', 'get_one');
@@ -85,17 +86,14 @@ Route::controller(InternalOrderController::class)->group(function () {
     Route::post('/update_internal_order/{id}', 'update');
     Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
     Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems')->name('GetInternalOrderItems');
-    Route::get('/get_internal_orders','indexPagination');
+    Route::get('/get_internal_orders', 'indexPagination');
 
 });
 
 Route::controller(ExternalOrderController::class)->group(function () {
     Route::post('/create_external_order', 'store');
-//    Route::post('/update_internal_order/{id}', 'update');
-//    Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
-//    Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems')->name('GetInternalOrderItems');
-//    Route::get('/get_internal_orders','indexPagination');
-
+    Route::post('/change_external_order_status/{id}', 'ChangeExternalOrderStatus');
+    Route::post('/accept_external_order/{id}','AcceptExternalOrder');
 });
 
 
@@ -103,7 +101,7 @@ Route::controller(InvoiceController::class)->group(function () {
     Route::post('/change_invoice_status/{id}', 'ChangeInvoiceStatus');
     Route::get('/get_one_invoice/{id}', 'get_one')->name('get_one_invoice');
     Route::get('/print_invoice/{id}', 'PrintInvoice')->name('print_invoice');
-    Route::get('/get_invoices','indexPagination');
+    Route::get('/get_invoices', 'indexPagination');
 
 });
 
@@ -136,6 +134,8 @@ Route::controller(MaterialController::class)->group(function () {
 
 Route::controller(WarehouseMaterialController::class)->group(function () {
     Route::get('/get_warehouse_materials', 'index');
+    Route::post('/add_warehouse_materials', 'AddWarehouseMaterials');
+    Route::post('/remove_warehouse_materials', 'RemoveWarehouseMaterials');
 });
 
 Route::controller(WarehouseController::class)->group(function () {
@@ -143,5 +143,13 @@ Route::controller(WarehouseController::class)->group(function () {
     Route::get('/get_one_warehouse/{id}', 'get_one');
     Route::get('/get_warehouses', 'index');
 });
+
+Route::controller(AuthController::class)->group(function () {
+
+    Route::post('/employee_login', 'EmployeeLogin');
+    Route::post('/employee_logout', 'EmployeeLogout');
+
+});
+
 
 

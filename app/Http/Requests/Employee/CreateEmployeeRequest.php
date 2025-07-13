@@ -19,6 +19,8 @@ class CreateEmployeeRequest extends BaseRequest
         return [
             'branch_id' => [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'],
             'name' => 'required',
+            'user_name' => [Rule::unique('employees')->whereNull('deleted_at'),'required'],
+            'password' => 'string|min:8|required',
             'type' => [Rule::in(EmployeeTypeEnum::toArray()), 'required'],
             'phone' => [Rule::unique('employees')->whereNull('deleted_at'),'required','phone:sy'],
             'address' => 'required',

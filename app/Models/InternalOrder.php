@@ -20,6 +20,7 @@ class InternalOrder extends Model
         'invoice_id',
         'waiter_id',
         'full_price',
+        'type',
         'status',
     ];
 
@@ -29,7 +30,17 @@ class InternalOrder extends Model
         'deleted_at',
     ];
 
-    protected $appends = ['waiter_name','table_id','type'];
+    protected $appends = ['waiter_name','table_id','external_order_info'];
+
+    /** @noinspection PhpUnused */
+    public function getExternalOrderInfoAttribute()
+    {
+        if ($this->type !== 'ext') {
+            return null;
+        }
+
+        return ExternalOrderInformation::where('invoice_id', $this->invoice_id)->first();
+    }
 
     /** @noinspection PhpUnused */
     public function getWaiterNameAttribute()
@@ -47,12 +58,6 @@ class InternalOrder extends Model
         return $tableId;
     }
 
-    /** @noinspection PhpUnused */
-    public function getTypeAttribute()
-    {
-        $type = $this->waiter_id == null ? 'ext' : 'int';
-        return $type;
-    }
 
     /** @noinspection PhpUnused */
     public function Waiter(): BelongsTo

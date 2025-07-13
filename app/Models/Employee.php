@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Employee extends Model
+class Employee extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasApiTokens;
 
     protected $primaryKey = 'id';
 
@@ -21,6 +23,8 @@ class Employee extends Model
     protected $fillable = [
         'branch_id',
         'name',
+        'user_name',
+        'password',
         'type',
         'phone',
         'address',
@@ -30,12 +34,14 @@ class Employee extends Model
     ];
 
     protected $hidden = [
+        'password',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $casts = [
+        'password' => 'hashed',
         'age' => 'integer'
     ];
 

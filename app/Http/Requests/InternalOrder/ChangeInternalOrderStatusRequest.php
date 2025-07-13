@@ -4,6 +4,7 @@ namespace App\Http\Requests\InternalOrder;
 
 use App\Enum\EmployeeTypeEnum;
 use App\Enum\OrderStatusEnum;
+use App\Enum\OrderTypeEnum;
 use App\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,8 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
                             ->where('branch_id', $this->branch_id)
                             ->where('table_id', $this->table_id);
                     })
-                    ->where('status', OrderStatusEnum::WAITING),
+                    ->where('status', OrderStatusEnum::WAITING)
+                    ->where('type',OrderTypeEnum::INT),
             ];
             $arr['waiter_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::WAITER), 'required'];
         }
@@ -49,7 +51,8 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
                             ->where('branch_id', $this->branch_id)
                             ->where('table_id', $this->table_id);
                     })
-                    ->where('status', OrderStatusEnum::PENDING),
+                    ->where('status', OrderStatusEnum::PENDING)
+                    ->where('type',OrderTypeEnum::INT),
             ];
             $arr['waiter_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::WAITER), 'required'];
         }
@@ -64,7 +67,8 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
                             ->where('branch_id', $this->branch_id)
                             ->where('table_id', $this->table_id);
                     })
-                    ->where('status', OrderStatusEnum::WAITING),
+                    ->where('status', OrderStatusEnum::WAITING)
+                    ->where('type',OrderTypeEnum::INT),
             ];   $arr['captain_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::CAPTAIN), 'required'];
         }
         elseif ($this->status == OrderStatusEnum::FINISHING){
@@ -78,7 +82,8 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
                             ->where('branch_id', $this->branch_id)
                             ->where('table_id', $this->table_id);
                     })
-                    ->where('status', OrderStatusEnum::PREPARING),
+                    ->where('status', OrderStatusEnum::PREPARING)
+                    ->where('type',OrderTypeEnum::INT),
             ];
             $arr['captain_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::CAPTAIN), 'required'];
         }

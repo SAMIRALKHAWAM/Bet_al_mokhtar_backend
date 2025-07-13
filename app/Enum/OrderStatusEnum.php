@@ -22,6 +22,7 @@ class OrderStatusEnum
             self::WAITING,
             self::PREPARING,
             self::FINISHING,
+            self::DELIVERING,
         ];
     }
 

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('waiter_id')->nullable();
             $table->foreign('waiter_id')->references('id')->on('employees')->cascadeOnDelete();
             $table->integer('full_price')->nullable();
+            $table->string('type');
             $table->string('status')->default(OrderStatusEnum::WAITING);
             $table->timestamps();
             $table->softDeletes();

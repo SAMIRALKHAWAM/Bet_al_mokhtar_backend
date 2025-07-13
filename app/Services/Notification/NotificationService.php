@@ -20,7 +20,7 @@ class NotificationService
                     'title' => $title,
                     'body' => $body,
                 ],
-                'token' => "$fcm_token",
+                'token' => $fcm_token,
             ];
 
 
