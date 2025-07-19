@@ -6,13 +6,15 @@ namespace App\Models;
 
 use App\Traits\FileTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
+
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, FileTrait;
+    use HasApiTokens, HasFactory, Notifiable, FileTrait,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -21,9 +23,9 @@ class Admin extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'user_name',
         'password',
-        'image'
+        'type'
     ];
 
     /**
@@ -33,7 +35,6 @@ class Admin extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -42,7 +43,6 @@ class Admin extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 }

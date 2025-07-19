@@ -146,8 +146,12 @@ Route::controller(WarehouseController::class)->group(function () {
 
 Route::controller(AuthController::class)->group(function () {
 
-    Route::post('/employee_login', 'EmployeeLogin');
-    Route::post('/employee_logout', 'EmployeeLogout');
+    Route::post('/employee_login', 'Login')->name('employee_login');
+    Route::post('/admin_login', 'Login')->name('admin_login');
+    Route::post('/user_login', 'Login')->name('user_login');
+    Route::post('/employee_logout', 'Logout')->name('employee_logout');
+    Route::post('/admin_logout', 'Logout')->name('admin_logout');
+    Route::post('/user_logout', 'Logout')->name('user_logout');
 
 });
 

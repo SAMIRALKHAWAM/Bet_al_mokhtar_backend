@@ -6,7 +6,7 @@ use App\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class EmployeeLoginRequest extends BaseRequest
+class LoginRequest extends BaseRequest
 {
 
 
@@ -17,10 +17,21 @@ class EmployeeLoginRequest extends BaseRequest
      */
     public function rules(): array
     {
-        return [
-            'user_name' => [Rule::exists('employees', 'user_name')->whereNull('deleted_at'), 'required'],
+
+        $arr = [
             'password' => 'string|min:8|nullable',
         ];
+
+        if (\request()->route()->getName() === 'employee_login'){
+            $arr['user_name'] = [Rule::exists('employees', 'user_name')->whereNull('deleted_at'), 'required'];
+        }
+        elseif (\request()->route()->getName() === 'admin_login'){
+            $arr['user_name'] = [Rule::exists('admins', 'user_name')->whereNull('deleted_at'), 'required'];
+        }else{
+            $arr['user_name'] = [Rule::exists('users', 'user_name'), 'required'];
+        }
+
+        return $arr;
     }
 
     public function messages()

@@ -44,12 +44,12 @@ return [
             'driver' => 'passport',
             'provider' => 'employees',
         ],
-        'users' => [
-            'driver' => 'sanctum',
+        'User' => [
+            'driver' => 'passport',
             'provider' => 'users',
         ],
-        'admins' => [
-            'driver' => 'sanctum',
+        'Admin' => [
+            'driver' => 'passport',
             'provider' => 'admins',
         ],
     ],

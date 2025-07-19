@@ -11,6 +11,7 @@ class EmployeeTypeEnum
     const CAPTAIN = 'captain';
     const WAREHOUSEMAN = 'warehouseman';
     const DELIVERYMAN = 'deliveryman';
+    const SUBADMIN = 'subadmin';
 
 
     public static function toArray(){

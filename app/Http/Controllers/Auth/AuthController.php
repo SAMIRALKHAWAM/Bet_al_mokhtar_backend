@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Exceptions\ValidationException;
 use App\Http\Controllers\BaseCRUDController;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\EmployeeLoginRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Employee;
 use App\Services\Auth\AuthService;
 use Illuminate\Http\Request;
@@ -19,16 +19,16 @@ class AuthController extends BaseCRUDController
         $this->service = $service;
     }
 
-    public function EmployeeLogin(EmployeeLoginRequest $request)
+    public function Login(LoginRequest $request)
     {
-        $arr = Arr::only($request->validated(), ['user_name', 'password']);
-        $employee = $this->service->EmployeeLogin($arr);
-        return $this->sendResponse(__('custom.Success'), $employee);
+        $arr = Arr::only($request->validated(), ['user_name', 'password','model']);
+        $actor = $this->service->Login($arr);
+        return $this->sendResponse(__('custom.Success'), $actor);
     }
 
-    public function EmployeeLogout()
+    public function Logout()
     {
-        $this->service->EmployeeLogout();
+        $this->service->Logout();
         return $this->sendResponse(__('custom.Success'));
     }
 }
