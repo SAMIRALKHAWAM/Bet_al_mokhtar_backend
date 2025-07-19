@@ -39,22 +39,25 @@ class ChangeInvoiceStatusRequest extends BaseRequest
     public function rules(): array
     {
         $arr = [
-            'table_id' => [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'],
-            'branch_id' => [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'],
-            'status' => [Rule::in(OrderStatusEnum::InvoiceStatus()), 'required'],
+                  'status' => [Rule::in(OrderStatusEnum::InvoiceStatus()), 'required'],
         ];
 
 
         if ($this->status == OrderStatusEnum::CHECKOUT) {
+            $waiter = \auth('Employee')->user();
+            $branch_id = $waiter->branch_id;
+            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] = [
                 'required',
                 Rule::exists('invoices', 'id')
-                    ->where('branch_id', $this->branch_id)
+                    ->where('branch_id', $branch_id)
                     ->where('table_id', $this->table_id)
                     ->where('status', OrderStatusEnum::PENDING),
             ];
-            $arr['waiter_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::WAITER), 'required'];
-        } elseif ($this->status == OrderStatusEnum::DONE) {
+
+             } elseif ($this->status == OrderStatusEnum::DONE) {
+            $arr['branch_id'] = [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'];
+            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] = [
                 'required',
                 Rule::exists('invoices', 'id')
@@ -63,7 +66,9 @@ class ChangeInvoiceStatusRequest extends BaseRequest
                     ->where('status', OrderStatusEnum::PRINT),
             ];
             $arr['cashier_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::CASHIER), 'required'];
-        }elseif ($this->status == OrderStatusEnum::PRINT) {
+             }elseif ($this->status == OrderStatusEnum::PRINT) {
+            $arr['branch_id'] = [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'];
+            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] = [
                 'required',
                 Rule::exists('invoices', 'id')
@@ -77,6 +82,7 @@ class ChangeInvoiceStatusRequest extends BaseRequest
                 $query->where('from_date', '<=', \now())
                     ->where('to_date', '>=', \now());
             }),'nullable'];
+
         }
 
         return $arr;

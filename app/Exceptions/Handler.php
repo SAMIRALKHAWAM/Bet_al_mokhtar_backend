@@ -54,6 +54,10 @@ class Handler extends ExceptionHandler
             return \response()->json(['success' => false, 'message' => $exception->getMessage(), 'code' => 401], 401);
         });
 
+        $this->renderable(function (\Illuminate\Auth\AuthenticationException $exception) {
+            return \response()->json(['success' => false, 'message' => $exception->getMessage(), 'code' => 401], 401);
+        });
+
         $this->renderable(function (\Error $exception) {
             return \response()->json(['success' => false, 'message' => $exception->getMessage(), 'code' => 500], 500);
         });

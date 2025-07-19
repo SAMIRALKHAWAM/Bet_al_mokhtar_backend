@@ -22,6 +22,7 @@ class LoginRequest extends BaseRequest
             'password' => 'string|min:8|nullable',
         ];
 
+
         if (\request()->route()->getName() === 'employee_login'){
             $arr['user_name'] = [Rule::exists('employees', 'user_name')->whereNull('deleted_at'), 'required'];
         }

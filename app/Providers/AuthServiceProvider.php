@@ -24,7 +24,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         Passport::tokensCan([
             'Employee' => 'Employee token',
-
+            'Admin' => 'Admin token',
+            'User' => 'User token',
         ]);
         Passport::personalAccessTokensExpireIn(now()->addDays(90));
     }

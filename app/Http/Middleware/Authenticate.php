@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\NotFoundException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
@@ -15,6 +16,6 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        return route('login');
+        throw new AuthenticationException('Unauthenticated.');
     }
 }
