@@ -15,10 +15,11 @@ class TableChangeStatusRequest extends BaseRequest
      */
     public function rules(): array
     {
+
+        $waiter = \auth('Employee')->user();
+        $branch_id = $waiter->Branch?->id;
         return [
-            'id' => [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 1)->whereNull('deleted_at'), 'required'],
-            'branch_id' => [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'],
-            'waiter_id' => [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', 'waiter'), 'required'],
+            'id' => [Rule::exists('tables', 'id')->where('branch_id', $branch_id)->where('available', 1)->whereNull('deleted_at'), 'required'],
         ];
     }
 }

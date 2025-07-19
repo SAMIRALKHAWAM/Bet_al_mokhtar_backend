@@ -162,7 +162,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
-Route::middleware(['auth:Employee', 'employee.type:waiter','scope:Employee'])->group(function () {
+Route::middleware(['auth:Employee', 'employee.type:waiter', 'scope:Employee'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
 
         Route::post('/employee_logout', 'Logout')->name('employee_logout');
@@ -173,7 +173,30 @@ Route::middleware(['auth:Employee', 'employee.type:waiter','scope:Employee'])->g
         Route::get('/get_one_invoice/{id}', 'get_one')->name('get_one_invoice');
     });
 
+    Route::controller(InternalOrderController::class)->group(function () {
+        Route::post('/create_internal_order', 'store');
+        Route::post('/update_internal_order/{id}', 'update');
+        Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
+        Route::get('/get_internal_orders', 'indexPagination');
 
+    });
+
+    Route::controller(ItemController::class)->group(function () {
+        Route::get('/get_items', 'index');
+    });
+
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/get_categories', 'index');
+    });
+
+    Route::controller(OfferController::class)->group(function () {
+    Route::get('/get_offers', 'indexPagination');
+});
+
+    Route::controller(TableController::class)->group(function () {
+    Route::get('/get_tables', 'indexPagination');
+    Route::post('/table_change_status/{id}', 'TableChangeStatus');
+});
 });
 
 

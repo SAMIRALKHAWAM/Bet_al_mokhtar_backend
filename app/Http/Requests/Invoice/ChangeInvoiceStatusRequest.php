@@ -8,6 +8,7 @@ use App\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class ChangeInvoiceStatusRequest extends BaseRequest
 {
@@ -45,7 +46,7 @@ class ChangeInvoiceStatusRequest extends BaseRequest
 
         if ($this->status == OrderStatusEnum::CHECKOUT) {
             $waiter = \auth('Employee')->user();
-            $branch_id = $waiter->branch_id;
+            $branch_id = $waiter->Branch?->id;
             $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] = [
                 'required',

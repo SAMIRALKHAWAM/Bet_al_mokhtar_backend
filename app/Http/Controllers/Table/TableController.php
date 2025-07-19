@@ -31,8 +31,8 @@ class TableController extends BaseCRUDController
 
     public function TableChangeStatus($id,TableChangeStatusRequest $request)
     {
-        $data = Arr::only($request->validated(), ['id', 'branch_id', 'waiter_id']);
-        $this->service->TableChangeStatus($id,$data);
+        $data = Arr::only($request->validated(), ['id']);
+        $this->service->TableChangeStatus($id);
         return $this->sendResponse(__('custom.Success'));
     }
 }

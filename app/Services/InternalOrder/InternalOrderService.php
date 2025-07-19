@@ -23,6 +23,10 @@ class InternalOrderService extends BaseService
 
     public function create($data)
     {
+        $waiter = \auth('Employee')->user();
+        $branch_id = $waiter->branch_id;
+        $data['waiter_id'] = $waiter->id;
+        $data['branch_id'] = $branch_id;
         $invoice = Invoice::firstOrCreate(
             [
                 'table_id' => $data['table_id'],
@@ -70,6 +74,9 @@ class InternalOrderService extends BaseService
     {
         $internalOrder = $this->getOne($id);
         $invoice = $internalOrder->Invoice;
+        $waiter = \auth('Employee')->user();
+        $branch_id = $waiter->branch_id;
+        $data['branch_id'] = $branch_id;
         if ($invoice->branch_id != $data['branch_id']){
             throw new ValidationException('The internal Order not in this branch');
         }

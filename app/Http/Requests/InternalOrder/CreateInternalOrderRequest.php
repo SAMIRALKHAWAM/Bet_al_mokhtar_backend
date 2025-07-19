@@ -18,10 +18,11 @@ class CreateInternalOrderRequest extends BaseRequest
     public function rules(): array
     {
 
+        $waiter = \auth('Employee')->user();
+        $branch_id = $waiter->Branch?->id;
+
         return [
-            'branch_id' => [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'],
-            'table_id' => [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->whereNull('deleted_at')->where('available',0), 'required'],
-            'waiter_id' => [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', 'waiter'), 'required'],
+            'table_id' => [Rule::exists('tables', 'id')->where('branch_id', $branch_id)->whereNull('deleted_at')->where('available',0), 'required'],
             'items' => 'array',
             'items.*.item_id' => [
                 Rule::exists('items', 'id')
@@ -39,10 +40,10 @@ class CreateInternalOrderRequest extends BaseRequest
                             ->where('from_date', '<=', \now())
                             ->where('to_date', '>=', \now());
                     })
-                    ->whereIn('id', function ($query) {
+                    ->whereIn('id', function ($query) use ($branch_id){
                         $query->select('offer_id')
                             ->from('offer_branches')
-                            ->where('branch_id', $this->branch_id);
+                            ->where('branch_id', $branch_id);
                     }),
                 'required_with:offers',
                 'distinct',

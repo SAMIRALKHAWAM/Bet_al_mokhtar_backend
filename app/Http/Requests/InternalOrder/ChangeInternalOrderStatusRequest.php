@@ -19,44 +19,30 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
     public function rules(): array
     {
         $arr = [
-            'table_id' => [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'],
-            'branch_id' => [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'],
             'status' => [Rule::in(OrderStatusEnum::InternalOrderStatus()),'required'],
         ];
 
         if ($this->status == OrderStatusEnum::PENDING){
+            $waiter = \auth('Employee')->user();
+            $branch_id = $waiter->Branch?->id;
+            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] =  [
                 'required',
                 Rule::exists('internal_orders', 'id')
                     ->whereNull('deleted_at')
-                    ->whereIn('invoice_id', function ($query) {
+                    ->whereIn('invoice_id', function ($query) use ($branch_id) {
                         $query->select('id')
                             ->from('invoices')
-                            ->where('branch_id', $this->branch_id)
+                            ->where('branch_id', $branch_id)
                             ->where('table_id', $this->table_id);
                     })
                     ->where('status', OrderStatusEnum::WAITING)
                     ->where('type',OrderTypeEnum::INT),
             ];
-            $arr['waiter_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::WAITER), 'required'];
-        }
-        elseif ($this->status == OrderStatusEnum::WAITING){
-            $arr['id'] =  [
-                'required',
-                Rule::exists('internal_orders', 'id')
-                    ->whereNull('deleted_at')
-                    ->whereIn('invoice_id', function ($query) {
-                        $query->select('id')
-                            ->from('invoices')
-                            ->where('branch_id', $this->branch_id)
-                            ->where('table_id', $this->table_id);
-                    })
-                    ->where('status', OrderStatusEnum::PENDING)
-                    ->where('type',OrderTypeEnum::INT),
-            ];
-            $arr['waiter_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::WAITER), 'required'];
-        }
+          }
         elseif ($this->status == OrderStatusEnum::PREPARING){
+            $arr['branch_id'] = [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'];
+            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] =  [
                 'required',
                 Rule::exists('internal_orders', 'id')
@@ -72,6 +58,8 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
             ];   $arr['captain_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::CAPTAIN), 'required'];
         }
         elseif ($this->status == OrderStatusEnum::FINISHING){
+            $arr['branch_id'] = [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'];
+            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] =  [
                 'required',
                 Rule::exists('internal_orders', 'id')

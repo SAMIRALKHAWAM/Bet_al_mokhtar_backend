@@ -9,13 +9,6 @@ use Illuminate\Validation\Rule;
 
 class UpdateInternalOrderRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,9 +17,10 @@ class UpdateInternalOrderRequest extends BaseRequest
      */
     public function rules(): array
     {
+        $waiter = \auth('Employee')->user();
+        $branch_id = $waiter->branch_id;
         return [
             'id' => [Rule::exists('internal_orders','id')->where('status',OrderStatusEnum::PENDING),'required'],
-            'branch_id' => [Rule::exists('branches','id')->whereNull('deleted_at'),'required'],
             'items' => 'array',
             'items.*.item_id' => [
                 Rule::exists('items', 'id')
@@ -44,10 +38,10 @@ class UpdateInternalOrderRequest extends BaseRequest
                             ->where('from_date', '<=', \now())
                             ->where('to_date', '>=', \now());
                     })
-                    ->whereIn('id', function ($query) {
+                    ->whereIn('id', function ($query) use ($branch_id){
                         $query->select('offer_id')
                             ->from('offer_branches')
-                            ->where('branch_id', $this->branch_id);
+                            ->where('branch_id', $branch_id);
                     }),
                 'required_with:offers',
                 'distinct',
