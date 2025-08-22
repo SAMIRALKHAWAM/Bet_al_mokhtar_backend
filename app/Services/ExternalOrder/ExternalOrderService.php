@@ -57,7 +57,7 @@ class ExternalOrderService extends BaseService
             'user_id' => $data['user_id'],
             'location' => $data['location'],
             'phone' => $data['phone'],
-            'qr' => Storage::url('invoices/invoice' . $external_order_id . '.svg'),
+            'qr' => Storage::url('public/invoices/invoice' . $external_order_id . '.svg'),
         ]);
     }
 
