@@ -14,6 +14,7 @@ use App\Http\Controllers\Material\MaterialController;
 use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\Rate\RateController;
 use App\Http\Controllers\Table\TableController;
+use App\Http\Controllers\TableReservation\TableReservationController;
 use App\Http\Controllers\Tax\TaxController;
 use App\Http\Controllers\Warehouse\WarehouseController;
 use App\Http\Controllers\WarehouseMaterial\WarehouseMaterialController;
@@ -155,5 +156,12 @@ Route::controller(AuthController::class)->group(function () {
 
 });
 
+
+Route::controller(TableReservationController::class)->group(function () {
+
+
+    Route::post('/add_table_reservation','store');
+
+});
 
 

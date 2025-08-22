@@ -53,7 +53,8 @@ class ChangeExternalOrderStatusRequest extends BaseRequest
                     ->where('type',OrderTypeEnum::EXT),
             ];
             $arr['captain_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::CAPTAIN), 'required'];
-        }
+            $arr['deliveryman_id'] =    [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::DELIVERYMAN), 'required'];
+     }
 
         return $arr;
     }

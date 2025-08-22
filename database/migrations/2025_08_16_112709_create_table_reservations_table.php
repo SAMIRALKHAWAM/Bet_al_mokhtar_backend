@@ -10,12 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('branches', function (Blueprint $table) {
+        Schema::create('table_reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sub_admin_id');
-            $table->foreign('sub_admin_id')->references('id')->on('admins')->cascadeOnDelete();
-            $table->string('name');
-            $table->string('location');
+            $table->unsignedBigInteger('table_id');
+            $table->foreign('table_id')->references('id')->on('tables')->cascadeOnDelete();
+            $table->date('date');
+            $table->time('from_time');
+            $table->time('to_time');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -26,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('branches');
+        Schema::dropIfExists('table_reservations');
     }
 };

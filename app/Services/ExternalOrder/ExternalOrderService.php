@@ -93,6 +93,9 @@ class ExternalOrderService extends BaseService
     public function ChangeExternalOrderStatus($id, $data)
     {
         $externalOrder = $this->getOne($id);
+        if ($data['status'] === OrderStatusEnum::DELIVERING){
+            $externalOrder->Invoice()->update(['deliveryman_id'=>$data['deliveryman_id']]);
+        }
         $externalOrder->update(['status' => $data['status']]);
     }
 

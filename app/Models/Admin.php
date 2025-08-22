@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Traits\FileTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,7 +15,7 @@ use Laravel\Passport\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, FileTrait,SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, FileTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -45,4 +46,9 @@ class Admin extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function Branch(): HasOne
+    {
+        return $this->hasOne(Branch::class, 'sub_admin_id');
+    }
 }

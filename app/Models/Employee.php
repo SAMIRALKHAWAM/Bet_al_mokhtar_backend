@@ -62,4 +62,9 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(InternalOrder::class, 'waiter_id');
     }
+
+    public function Invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'deliveryman_id');
+    }
 }

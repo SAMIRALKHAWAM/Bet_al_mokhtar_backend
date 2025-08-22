@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,7 @@ class Branch extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'sub_admin_id',
         'name',
         'location',
     ];
@@ -56,4 +58,10 @@ class Branch extends Model
     {
         return $this->hasOne(Warehouse::class, 'branch_id');
     }
+
+    public function SubAdmin(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'sub_admin_id')->withTrashed();
+    }
+
 }

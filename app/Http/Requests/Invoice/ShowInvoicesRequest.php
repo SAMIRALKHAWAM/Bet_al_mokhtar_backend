@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Invoice;
 
+use App\Enum\EmployeeTypeEnum;
 use App\Enum\OrderStatusEnum;
 use App\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,6 +22,8 @@ class ShowInvoicesRequest extends BaseRequest
         return [
             'branchId' => [Rule::exists('branches','id')->whereNull('deleted_at'),'nullable'],
             'status' => [Rule::in(OrderStatusEnum::InvoiceStatus()),'nullable'],
+            'userId' =>  [Rule::exists('users','id'),'nullable'],
+            'deliverymanId' => [Rule::exists('employees', 'id')->where('type', EmployeeTypeEnum::DELIVERYMAN), 'nullable'],
         ];
     }
 }

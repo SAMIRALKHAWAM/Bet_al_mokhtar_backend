@@ -11,6 +11,8 @@ class WarehouseMaterial extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $appends = ['material_name'];
+
     protected $fillable = [
         'warehouse_id',
         'material_id',
@@ -22,6 +24,14 @@ class WarehouseMaterial extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /** @noinspection PhpUnused */
+    public function getMaterialNameAttribute()
+    {
+        $material_name = $this->Material->name;
+        unset($this->Material);
+        return $material_name;
+    }
 
     public function Warehouse(): BelongsTo
     {

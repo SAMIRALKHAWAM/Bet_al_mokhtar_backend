@@ -17,6 +17,15 @@ class CreateBranchRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'sub_admin_id' => [
+                'required',
+                Rule::exists('admins', 'id')
+                    ->whereNull('deleted_at')
+                    ->where('type', 'subadmin'),
+                Rule::unique('branches', 'sub_admin_id')
+                    ->whereNull('deleted_at'),
+            ],
+
             'name' => [Rule::unique('branches')->whereNull('deleted_at'), 'required'],
             'location' => 'required',
         ];

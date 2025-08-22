@@ -7,6 +7,7 @@ use App\Http\Controllers\BaseCRUDController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Invoice\ChangeInvoiceStatusRequest;
 use App\Http\Requests\Invoice\InvoiceIdRequest;
+use App\Models\InternalOrder;
 use App\Models\Invoice;
 use App\Services\Invoice\InvoiceService;
 use App\Services\Item\ItemService;

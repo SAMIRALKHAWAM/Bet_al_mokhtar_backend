@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ExternalOrderInformation::class, 'user_id');
     }
+
+    public function Invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'user_id');
+    }
 }

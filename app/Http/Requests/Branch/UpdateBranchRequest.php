@@ -18,9 +18,18 @@ class UpdateBranchRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'id' => [Rule::exists('branches','id')->whereNull('deleted_at'),'required'],
+            'id' => [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'],
             'name' => [Rule::unique('branches')->ignore($this->id)->whereNull('deleted_at'), 'required'],
             'location' => 'required',
+            'sub_admin_id' => [
+                'required',
+                Rule::exists('admins', 'id')
+                    ->whereNull('deleted_at')
+                    ->where('type', 'subadmin'),
+                Rule::unique('branches', 'sub_admin_id')
+                    ->ignore($this->id)
+                    ->whereNull('deleted_at'),
+            ],
         ];
     }
 

@@ -12,6 +12,8 @@ return new class extends Migration {
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->unsignedBigInteger('table_id')->nullable();
             $table->foreign('table_id')->references('id')->on('tables')->cascadeOnDelete();
             $table->unsignedBigInteger('branch_id');
@@ -20,6 +22,8 @@ return new class extends Migration {
             $table->integer('tax')->default(0);
             $table->integer('final_price')->default(0);
             $table->integer('discount')->default(0);
+            $table->unsignedBigInteger('deliveryman_id')->nullable();
+            $table->foreign('deliveryman_id')->references('id')->on('employees')->cascadeOnDelete();
             $table->string('status')->default('pending');
             $table->timestamps();
         });

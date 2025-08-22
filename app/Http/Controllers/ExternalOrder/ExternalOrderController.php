@@ -22,7 +22,7 @@ class ExternalOrderController extends BaseCRUDController
 
     public function ChangeExternalOrderStatus($id, ChangeExternalOrderStatusRequest $request)
     {
-        $data = Arr::only($request->validated(), ['status', 'id']);
+        $data = Arr::only($request->validated(), ['status', 'id','deliveryman_id']);
         $this->service->ChangeExternalOrderStatus($id, $data);
         return $this->sendResponse(__('custom.Success'));
     }

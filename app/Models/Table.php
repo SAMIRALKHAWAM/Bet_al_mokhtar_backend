@@ -17,6 +17,7 @@ class Table extends Model
 
     protected $appends = [
         'branch_name',
+        'reservation_at',
     ];
 
 
@@ -49,6 +50,21 @@ class Table extends Model
         return $branchName;
     }
 
+    /** @noinspection PhpUnused */
+    public function getReservationAtAttribute()
+    {
+        $today = now()->toDateString();
+
+        $reservation = $this->TableReservations()
+            ->where('date', $today)
+            ->where('from_time', '>=', now()->format('H:i:s'))
+            ->orderBy('from_time', 'asc')
+            ->first();
+        unset($this->TableReservations);
+
+        return $reservation ? $reservation->from_time : null;
+
+    }
 
     public function Branch(): BelongsTo
     {
@@ -58,5 +74,10 @@ class Table extends Model
     public function Invoices(): HasMany
     {
         return $this->hasMany(Invoice::class, 'table_id');
+    }
+
+    public function TableReservations(): HasMany
+    {
+        return $this->hasMany(TableReservation::class, 'table_id');
     }
 }
