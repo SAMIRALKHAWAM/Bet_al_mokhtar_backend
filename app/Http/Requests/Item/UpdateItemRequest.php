@@ -20,6 +20,7 @@ class UpdateItemRequest extends BaseRequest
             'id' => [Rule::exists('items')->whereNull('deleted_at'),'required'],
             'category_id' => [Rule::exists('categories','id')->whereNull('deleted_at'),'required'],
             'name' => [Rule::unique('items')->whereNull('deleted_at')->ignore($this->id),'required'],
+            'description' => 'required|string',
             'price' => 'required|min:1000|numeric',
         ];
     }

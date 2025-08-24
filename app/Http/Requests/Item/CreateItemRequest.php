@@ -18,6 +18,7 @@ class CreateItemRequest extends BaseRequest
         return [
             'category_id' => [Rule::exists('categories','id')->whereNull('deleted_at'),'required'],
             'name' => [Rule::unique('items')->whereNull('deleted_at'),'required'],
+            'description' => 'required|string',
             'price' => 'required|min:1000|numeric',
             'images' => 'required|array',
             'images.*' => 'required|image',
