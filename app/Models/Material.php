@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Material extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'id';
 
@@ -28,5 +28,10 @@ class Material extends Model
     public function WarehouseMaterials(): HasMany
     {
         return $this->hasMany(WarehouseMaterial::class, 'warehouse_id');
+    }
+
+    public function PurchaseInvoiceLines(): HasMany
+    {
+        return $this->hasMany(PurchaseInvoiceLine::class, 'material_id');
     }
 }

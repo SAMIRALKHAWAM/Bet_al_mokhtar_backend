@@ -12,6 +12,7 @@ use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Item\ItemController;
 use App\Http\Controllers\Material\MaterialController;
 use App\Http\Controllers\Offer\OfferController;
+use App\Http\Controllers\PurchaseInvoice\PurchaseInvoiceController;
 use App\Http\Controllers\Rate\RateController;
 use App\Http\Controllers\Table\TableController;
 use App\Http\Controllers\TableReservation\TableReservationController;
@@ -163,5 +164,14 @@ Route::controller(TableReservationController::class)->group(function () {
     Route::post('/add_table_reservation','store');
 
 });
+
+Route::controller(PurchaseInvoiceController::class)->group(function () {
+    Route::post('/add_purchase_invoice','store');
+    Route::delete('/delete_purchase_invoice/{id}','destroy');
+    Route::get('/get_purchase_invoices','indexPagination');
+    Route::get('/get_purchase_invoice_lines/{id}','GetPurchaseInvoiceLines');
+});
+
+
 
 

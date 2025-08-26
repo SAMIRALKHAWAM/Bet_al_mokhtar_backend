@@ -64,4 +64,8 @@ class Branch extends Model
         return $this->belongsTo(Admin::class, 'sub_admin_id')->withTrashed();
     }
 
+    public function PurchaseInvoices(): HasMany
+    {
+        return $this->hasMany(PurchaseInvoice::class, 'branch_id');
+    }
 }

@@ -8,6 +8,7 @@ use App\Models\InternalOrder;
 use App\Models\Item;
 use App\Models\Material;
 use App\Models\Offer;
+use App\Models\PurchaseInvoice;
 use App\Models\User;
 use App\Observers\Branch\BranchObserver;
 use App\Observers\Category\CategoryObserver;
@@ -15,6 +16,7 @@ use App\Observers\InternalOrder\InternalOrderObserver;
 use App\Observers\Item\ItemObserver;
 use App\Observers\Material\MaterialObserver;
 use App\Observers\Offer\OfferObserver;
+use App\Observers\PurchaseInvoice\PurchaseInvoiceObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -40,5 +42,6 @@ class AppServiceProvider extends ServiceProvider
         InternalOrder::observe(InternalOrderObserver::class);
         Branch::observe(BranchObserver::class);
         Material::observe(MaterialObserver::class);
+        PurchaseInvoice::observe(PurchaseInvoiceObserver::class);
     }
 }
