@@ -12,6 +12,7 @@ use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Item\ItemController;
 use App\Http\Controllers\Material\MaterialController;
 use App\Http\Controllers\Offer\OfferController;
+use App\Http\Controllers\Payroll\PayrollController;
 use App\Http\Controllers\PurchaseInvoice\PurchaseInvoiceController;
 use App\Http\Controllers\Rate\RateController;
 use App\Http\Controllers\Table\TableController;
@@ -173,5 +174,7 @@ Route::controller(PurchaseInvoiceController::class)->group(function () {
 });
 
 
-
+Route::controller(PayrollController::class)->group(function () {
+    Route::post('/calculate_payrolls','CalculatePayrolls');
+});
 

@@ -41,6 +41,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api/waiter')
                 ->group(base_path('routes/actors/waiter.php'));
 
+            Route::middleware('api')
+                ->prefix('api/captain')
+                ->group(base_path('routes/actors/captain.php'));
+
             // Add here any new route file
             //
             //

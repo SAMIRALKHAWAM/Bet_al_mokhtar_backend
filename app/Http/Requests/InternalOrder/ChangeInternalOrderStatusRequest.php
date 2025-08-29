@@ -41,8 +41,9 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
             ];
           }
         elseif ($this->status == OrderStatusEnum::PREPARING){
-            $arr['branch_id'] = [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'];
-            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
+            $captain = \auth('Employee')->user();
+            $branch_id = $captain->Branch?->id;
+            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] =  [
                 'required',
                 Rule::exists('internal_orders', 'id')
@@ -55,11 +56,12 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
                     })
                     ->where('status', OrderStatusEnum::WAITING)
                     ->where('type',OrderTypeEnum::INT),
-            ];   $arr['captain_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::CAPTAIN), 'required'];
+            ];
         }
         elseif ($this->status == OrderStatusEnum::FINISHING){
-            $arr['branch_id'] = [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'];
-            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $this->branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
+            $captain = \auth('Employee')->user();
+            $branch_id = $captain->Branch?->id;
+            $arr['table_id'] = [Rule::exists('tables', 'id')->where('branch_id', $branch_id)->where('available', 0)->whereNull('deleted_at'), 'required'];
             $arr['id'] =  [
                 'required',
                 Rule::exists('internal_orders', 'id')
@@ -73,7 +75,6 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
                     ->where('status', OrderStatusEnum::PREPARING)
                     ->where('type',OrderTypeEnum::INT),
             ];
-            $arr['captain_id'] = [Rule::exists('employees', 'id')->where('branch_id', $this->branch_id)->where('type', EmployeeTypeEnum::CAPTAIN), 'required'];
         }
 
         return $arr;
