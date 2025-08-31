@@ -50,7 +50,9 @@ class ExternalOrderService extends BaseService
             mkdir(storage_path('invoices'), 0755, true);
         }
 
-        QrCode::format('svg')->generate($external_order_id, storage_path('invoices/invoice' . $external_order_id . '.svg'));
+        $filename = 'invoices/invoice' . $external_order_id . '.svg';
+        Storage::disk('public')->put($filename, QrCode::format('svg')->generate($external_order_id));
+       // QrCode::format('svg')->generate($external_order_id, storage_path('public/invoices/invoice' . $external_order_id . '.svg'));
 
         ExternalOrderInformation::create([
             'invoice_id' => $invoice_id,

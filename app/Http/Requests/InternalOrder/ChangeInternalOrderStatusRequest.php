@@ -48,10 +48,10 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
                 'required',
                 Rule::exists('internal_orders', 'id')
                     ->whereNull('deleted_at')
-                    ->whereIn('invoice_id', function ($query) {
+                    ->whereIn('invoice_id', function ($query) use ($branch_id){
                         $query->select('id')
                             ->from('invoices')
-                            ->where('branch_id', $this->branch_id)
+                            ->where('branch_id', $branch_id)
                             ->where('table_id', $this->table_id);
                     })
                     ->where('status', OrderStatusEnum::WAITING)
@@ -66,10 +66,10 @@ class ChangeInternalOrderStatusRequest extends BaseRequest
                 'required',
                 Rule::exists('internal_orders', 'id')
                     ->whereNull('deleted_at')
-                    ->whereIn('invoice_id', function ($query) {
+                    ->whereIn('invoice_id', function ($query) use($branch_id){
                         $query->select('id')
                             ->from('invoices')
-                            ->where('branch_id', $this->branch_id)
+                            ->where('branch_id', $branch_id)
                             ->where('table_id', $this->table_id);
                     })
                     ->where('status', OrderStatusEnum::PREPARING)

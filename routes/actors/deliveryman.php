@@ -169,33 +169,14 @@ Route::middleware(['auth:Employee', 'employee.type:deliveryman', 'scope:Employee
     });
 
     Route::controller(InvoiceController::class)->group(function () {
-        Route::post('/change_invoice_status/{id}', 'ChangeInvoiceStatus');
-        Route::get('/get_one_invoice/{id}', 'get_one')->name('get_one_invoice');
+        Route::get('/print_invoice/{id}', 'PrintInvoice')->name('print_invoice');
+        Route::get('/get_invoices', 'indexPagination');
     });
 
     Route::controller(InternalOrderController::class)->group(function () {
-        Route::post('/create_internal_order', 'store');
-        Route::post('/update_internal_order/{id}', 'update');
-        Route::post('/change_internal_order_status/{id}', 'ChangeInternalOrderStatus');
+        Route::get('/get_internal_order_items/{id}', 'GetInternalOrderItems')->name('GetInternalOrderItems');
         Route::get('/get_internal_orders', 'indexPagination');
 
-    });
-
-    Route::controller(ItemController::class)->group(function () {
-        Route::get('/get_items', 'index');
-    });
-
-    Route::controller(CategoryController::class)->group(function () {
-        Route::get('/get_categories', 'index');
-    });
-
-    Route::controller(OfferController::class)->group(function () {
-        Route::get('/get_offers', 'indexPagination');
-    });
-
-    Route::controller(TableController::class)->group(function () {
-        Route::get('/get_tables', 'indexPagination');
-        Route::post('/table_change_status/{id}', 'TableChangeStatus');
     });
 });
 

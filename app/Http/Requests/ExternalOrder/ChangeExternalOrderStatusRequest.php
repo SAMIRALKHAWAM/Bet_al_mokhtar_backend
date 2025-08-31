@@ -21,7 +21,6 @@ class ChangeExternalOrderStatusRequest extends BaseRequest
     public function rules(): array
     {
         $arr = [
-            'branch_id' => [Rule::exists('branches', 'id')->whereNull('deleted_at'), 'required'],
             'status' => [Rule::in(OrderStatusEnum::InternalOrderStatus()), 'required'],
         ];
 

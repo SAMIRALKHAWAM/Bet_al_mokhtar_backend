@@ -36,7 +36,7 @@ class MaterialObserver
      */
     public function deleted(Material $material): void
     {
-        //
+        WarehouseMaterial::where('material_id',$material->id)->delete();
     }
 
     /**
